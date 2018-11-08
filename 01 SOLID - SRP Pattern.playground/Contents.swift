@@ -52,6 +52,15 @@ func main()
     let player2 = teamRegister.checkInGuest("Player - Two")
     
     print(teamRegister)
+    
+    teamRegister.checkOutGuest(1)
+    print("---------------------------")
+    print(teamRegister)
+    
+    let player3 = teamRegister.checkInGuest("Player - Three")
+    
+    print("---------------------------")
+     print(teamRegister)
 }
 
 // Call for main function
