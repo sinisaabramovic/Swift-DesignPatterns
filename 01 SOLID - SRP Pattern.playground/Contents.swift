@@ -1,4 +1,6 @@
 // Example for single responsibility pattern
+// Single responsibility patterns directs that class should have one and only one reason to change
+// and also that every class should have one method
 
 import UIKit
 import Foundation
@@ -60,7 +62,13 @@ func main()
     let player3 = teamRegister.checkInGuest("Player - Three")
     
     print("---------------------------")
-     print(teamRegister)
+    print(teamRegister)
+    
+    let teamBus = TeamConveyance()
+    teamBus.takePlayersToStadium(teamRegister)
+    
+     print("------Match Over-------")
+    teamBus.dropPlayersBackAtHotel()
 }
 
 // Call for main function
