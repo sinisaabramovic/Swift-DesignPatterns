@@ -44,6 +44,32 @@ class CricketerFilter {
         }
         return filteredResult
     }
+    
+    // Part 2, now we can add more method
+    
+    func filterByRole(_ cricketers:[Cricketer], _ role: Role) -> [Cricketer] {
+        var filteredResult = [Cricketer]()
+        
+        for item in cricketers {
+            if item.role == role {
+                filteredResult.append(item)
+            }
+        }
+        
+        return filteredResult
+    }
+    
+    func filterByRoleAndTeam(_ cricketers: [Cricketer], _ role: Role, _ team: Team) -> [Cricketer] {
+        var filteredResult = [Cricketer]()
+        
+        for item in cricketers {
+            if item.role == role && item.team == team {
+                filteredResult.append(item)
+            }
+        }
+        
+        return filteredResult
+    }
 }
 
 func main(){
@@ -60,8 +86,12 @@ func main(){
     print("Croatia Cricketers")
     let cricketerFilter = CricketerFilter()
     
-    for item in cricketerFilter.filterByTeam(cricketers, .Croatia) {
-        print("\(item.name) belongs to Croatia Team")
+    for item in cricketerFilter.filterByTeam(cricketers, .USA) {
+        print("\(item.name) belongs to USA team")
+    }
+    
+    for item in cricketerFilter.filterByRoleAndTeam(cricketers, .batsman, .Croatia) {
+        print("\(item.name) belongs \(item.team) Team")
     }
 }
 
