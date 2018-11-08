@@ -9,6 +9,62 @@
 import Foundation
 import UIKit
 
+// Now lets add OCP
+// Protocol Condition basically checks if a particular item satissfies some criteria
+// Funciton isConditionMet takes item of generic type T and returns bollean
+protocol Condition {
+    associatedtype T
+    func isConditionMet(_ item: T) -> Bool
+}
+
+// Protocol named filter has function called filter which takes an array of itens
+// of generic type T and condition of type Condition as parameters and returns the filtered arraty
+protocol Filter {
+    associatedtype T
+    func filter<Cond: Condition>(_ items: [T], _ cond: Cond) -> [T] where Cond.T == T
+}
+
+class RoleCondition: Condition {
+    typealias T = Cricketer
+    let role: Role
+    init(_ role: Role) {
+        self.role = role
+    }
+    
+    func isConditionMet(_ item: Cricketer) -> Bool {
+        return item.role == role
+    }
+}
+
+class TeamCondition: Condition
+{
+    typealias T = Cricketer
+    let team: Team
+    init(_ team: Team) {
+        self.team = team
+    }
+    
+    func isConditionMet(_ item: Cricketer) -> Bool {
+        return item.team == team
+    }
+}
+
+class OCPCricketFilter {
+    typealias T = Cricketer
+    
+    func filter<Cond: Condition>(_ items: [Cricketer], _ cond: Cond) -> [T] where Cond.T == T {
+        var filteredItems = [Cricketer]()
+        
+        for item in items {
+            if cond.isConditionMet(item){
+                filteredItems.append(item)
+            }
+        }
+        
+        return filteredItems
+    }
+}
+
 enum Team {
     case Australia
     case India
@@ -72,6 +128,7 @@ class CricketerFilter {
     }
 }
 
+// This example is not good and shows how to not create OCP
 func main(){
     let sinisa = Cricketer("Sinisa", .Croatia, .allrounder)
     let jordan = Cricketer("Jordan", .USA, .batsman)
@@ -95,4 +152,24 @@ func main(){
     }
 }
 
-main()
+// OCP example
+func main_new(){
+    let sinisa = Cricketer("Sinisa", .Croatia, .allrounder)
+    let jordan = Cricketer("Jordan", .USA, .batsman)
+    let mihael = Cricketer("Mihael", .India, .batsman)
+    let drazen = Cricketer("Drazen", .Australia, .bowler)
+    let pero = Cricketer("Pero", .Australia, .batsman)
+    let tonci = Cricketer("Antonio", .Croatia, .batsman)
+    let luka = Cricketer("Luka", .India, .allrounder)
+    
+    let cricketers = [sinisa, jordan, mihael, drazen, pero, tonci, luka]
+    
+    let ocpFilter = OCPCricketFilter()
+    
+    for item in ocpFilter.filter(cricketers, TeamCondition(.Croatia)) {
+        print("\(item.name) belogs to \(item.team)")
+    }
+}
+
+//main()
+main_new()
