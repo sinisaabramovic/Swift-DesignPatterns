@@ -152,7 +152,7 @@ func main(){
     }
 }
 
-// OCP example
+// Good OCP example
 func main_new(){
     let sinisa = Cricketer("Sinisa", .Croatia, .allrounder)
     let jordan = Cricketer("Jordan", .USA, .batsman)
